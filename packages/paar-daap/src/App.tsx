@@ -1,31 +1,47 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { useMoralis } from "react-moralis";
 
 function App() {
+  const [ethAddress, setEthAddress] = useState(null);
   const {
     authenticate,
     isAuthenticated,
     isAuthenticating,
+    isWeb3Enabled,
+    enableWeb3,
     user,
     account,
     logout,
+    Moralis,
   } = useMoralis();
 
   useEffect(() => {
-    if (isAuthenticated) {
-      // add your logic here
+    if (!isWeb3Enabled && isAuthenticated) {
+      enableWeb3({ provider: "walletconnect" });
+      console.info("web3 enabled");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated]);
+  }, [isWeb3Enabled, isAuthenticated, enableWeb3]);
 
   const login = async () => {
+    const chainId = await Moralis.chainId;
+    console.log("chainId", chainId);
+
     if (!isAuthenticated) {
-      await authenticate({ signingMessage: "Log in using Moralis" })
+      await authenticate({
+        // signingMessage: "Log in using Moralis",
+        provider: "walletconnect",
+        chainId: 56,
+      })
         .then(function (user) {
           console.log("logged in user:", user);
-          console.log(user!.get("ethAddress"));
+
+          const address = user!.get("ethAddress");
+
+          console.log(address);
+          setEthAddress(address);
         })
         .catch(function (error) {
           console.log(error);
@@ -40,8 +56,13 @@ function App() {
 
   return (
     <div>
-      <h1>Moralis Hello World!</h1>
-      <button onClick={login}>Moralis Metamask Login</button>
+      <h1>Moralis!</h1>
+
+      <div>
+        <span>ETH Address: {ethAddress}</span>
+      </div>
+
+      <button onClick={login}>Moralis Login</button>
       <button onClick={logOut} disabled={isAuthenticating}>
         Logout
       </button>
