@@ -1,0 +1,57 @@
+.bridgeConnect {
+  width: 300px;
+  margin: 0 auto;
+  background: #e5e5e5;
+  padding: 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 35px;
+  border-radius: 10px;
+
+  .bridgeConnectInner {
+    width: 200px;
+
+    h1 {
+      margin: 0 0 15px 0;
+      text-align: center;
+    }
+    .ethAddress {
+      .ethAddressInner {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .addressLabel {
+        }
+        .addressContent {
+          height: 30px;
+          width: 100%;
+          background-color: lightgray;
+          margin: 10px 0 15px 0;
+        }
+      }
+    }
+    .connectControls {
+      .connectControlsInner {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}
+
+.button {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background: lightgray;
+  width: 100%;
+  padding: 15px 0;
+  font-size: 18px;
+  border-radius: 10px;
+}
