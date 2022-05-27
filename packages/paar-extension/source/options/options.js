@@ -14,11 +14,25 @@ class APIClient {
     this.ethAddress = ethAddress;
   }
 
-  getTransactions(address) {
-    console.info("getTransactions", this.ethAddress);
+  async startMoralis() {
+    await Moralis.start({
+      serverUrl: "https://dstoe4rnznzd.usemoralis.com:2053/server",
+      appId: "oU83WPo4qcyOzEuCSP2PiSfEq9YgXrm3vUmtEYDb",
+    });
+  }
+
+  async getTransactions(address) {
+    console.info("getTransactions", this.ethAddress, Moralis);
 
     if (this.ethAddress) {
       // TODO: call api
+      const params = { ethAddress: this.ethAddress };
+      const transactions = await Moralis.Cloud.run(
+        "getEthTransactions",
+        params
+      );
+
+      console.info("transactions", params, transactions);
     }
   }
 }
@@ -32,6 +46,8 @@ async function init() {
   document.getElementById("popupEthAddress").textContent = ethAddress;
 
   const apiClient = new APIClient(ethAddress);
+
+  apiClient.startMoralis();
 
   document.getElementById("getTransactions").onclick =
     apiClient.getTransactions();
