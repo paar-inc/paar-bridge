@@ -2,10 +2,22 @@ import React, { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.scss";
 import { useMoralis } from "react-moralis";
-// import Web3Provider from "@walletconnect/web3-provider";
+
+// const editorExtensionId = "fkpodhjdhmbnefledelfaahicomofcne";
+
+// const connection = chrome.runtime.connect(editorExtensionId);
+
+// const sendExtensionMessage = async (data: any) => {
+//   console.info("send message...", data, connection);
+//   // NOTE: chrome.runtime requires https
+
+//   chrome.runtime.sendMessage(editorExtensionId, { data }, function (response) {
+//     // if (!response.success) console.error(data, response);
+//     console.info("sendExtensionMessage response", response);
+//   });
+// };
 
 function App() {
-  const [ethAddress, setEthAddress] = useState(null);
   const {
     authenticate,
     isAuthenticated,
@@ -20,6 +32,16 @@ function App() {
 
   const address = user?.get("ethAddress");
 
+  const [ethAddress, setEthAddress] = useState(null);
+
+  useEffect(() => {
+    if (address) {
+      setEthAddress(address);
+      // sendExtensionMessage({ ethAddress: address });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [address]);
+
   useEffect(() => {
     if (!isWeb3Enabled && isAuthenticated) {
       enableWeb3({ provider: "walletconnect" });
@@ -28,49 +50,31 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isWeb3Enabled, isAuthenticated, enableWeb3]);
 
-  useEffect(() => {
-    if (address) {
-      setEthAddress(address);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address]);
-
   const login = async () => {
-    // const user = await Moralis.authenticate({ provider: "walletconnect" });
-    // console.info("user", user);
-    // const chainId = await Moralis.chainId;
-    // console.log("chainId", chainId);
-
     if (!isAuthenticated) {
       await authenticate({
         // signingMessage: "Log in using Moralis",
         provider: "walletconnect",
-        // chainId: 56,
-        // mobileLinks: [
-        //   "rainbow",
-        //   "metamask",
-        //   "argent",
-        //   "trust",
-        //   "imtoken",
-        //   "pillar",
-        // ],
       })
         .then(function (user) {
-          console.log("logged in user:", user);
+          console.info("logged in user:", user);
 
           const address = user!.get("ethAddress");
 
-          console.log(address);
+          console.info("address", address);
+
           setEthAddress(address);
+          // sendExtensionMessage({ ethAddress: address });
         })
         .catch(function (error) {
-          console.log(error);
+          console.error(error);
         });
     }
   };
 
   const logOut = async () => {
     await logout();
+    setEthAddress(null);
     console.log("logged out");
   };
 
@@ -82,7 +86,9 @@ function App() {
         <div className="ethAddress">
           <div className="ethAddressInner">
             <span className="addressLabel">ETH Address</span>
-            <span className="addressContent">{ethAddress}</span>
+            <span className="addressContent" id="paarEthAddress">
+              {ethAddress}
+            </span>
           </div>
         </div>
 
