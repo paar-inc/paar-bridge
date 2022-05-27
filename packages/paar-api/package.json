@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --transpile-only --no-notify index.ts",
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "watch:cloud": "moralis-admin-cli watch-cloud-folder --moralisApiKey Nu4s0IiG8FINWrb --moralisApiSecret 9IYgntrWnDi9E3I --moralisSubdomain dstoe4rnznzd.usemoralis.com --autoSave 1 --moralisCloudfolder cloud"
   },
   "devDependencies": {
     "@types/node": "^17.0.35",
