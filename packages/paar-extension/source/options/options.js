@@ -7,26 +7,34 @@ import browser from "webextension-polyfill";
 
 import optionsStorage from "../options-storage.js";
 
-// const rangeInputs = [...document.querySelectorAll('input[type="range"][name^="color"]')];
-// const numberInputs = [...document.querySelectorAll('input[type="number"][name^="color"]')];
-// const output = document.querySelector('.color-output');
+class APIClient {
+  ethAddress;
 
-// function updateOutputColor() {
-// 	output.style.backgroundColor = `rgb(${rangeInputs[0].value}, ${rangeInputs[1].value}, ${rangeInputs[2].value})`;
-// }
+  constructor(ethAddress) {
+    this.ethAddress = ethAddress;
+  }
 
-// function updateInputField(event) {
-// 	numberInputs[rangeInputs.indexOf(event.currentTarget)].value = event.currentTarget.value;
-// }
+  getTransactions(address) {
+    console.info("getTransactions", this.ethAddress);
 
-// for (const input of rangeInputs) {
-// 	input.addEventListener('input', updateOutputColor);
-// 	input.addEventListener('input', updateInputField);
-// }
+    if (this.ethAddress) {
+      // TODO: call api
+    }
+  }
+}
 
 async function init() {
-  await optionsStorage.syncForm("#options-form");
-  // updateOutputColor();
+  const storedOptions = await optionsStorage.getAll();
+  const ethAddress = storedOptions.text;
+
+  console.info("popup content", ethAddress, storedOptions);
+
+  document.getElementById("popupEthAddress").textContent = ethAddress;
+
+  const apiClient = new APIClient(ethAddress);
+
+  document.getElementById("getTransactions").onclick =
+    apiClient.getTransactions();
 }
 
 init();

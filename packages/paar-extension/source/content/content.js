@@ -1,30 +1,24 @@
 import optionsStorage from "../options-storage.js";
 
+var paarEthAddress = "";
+
 async function init() {
-  const options = await optionsStorage.getAll();
-  console.info("content", options);
+  // const options = await optionsStorage.getAll();
+
+  // TODO: use external message to retrieve address
+  setInterval(() => {
+    if (paarEthAddress === "") {
+      const ethAddress = document.getElementById("paarEthAddress").textContent;
+
+      if (ethAddress) {
+        paarEthAddress = ethAddress;
+        optionsStorage.set({ text: paarEthAddress });
+      }
+    }
+  }, 1000);
 }
 
 init();
-
-var paarEthAddress = "";
-
-// TODO: use external message to retrieve address
-setInterval(() => {
-  const ethAddress = document.getElementById("paarEthAddress").textContent;
-
-  if (ethAddress) {
-    paarEthAddress = ethAddress;
-  }
-}, 1000);
-
-getTransactions = () => {
-  console.info("getTransactions", paarEthAddress);
-
-  if (paarEthAddress) {
-    // call api
-  }
-};
 
 // async function getCurrentTab() {
 //   let queryOptions = { active: true, lastFocusedWindow: true };
