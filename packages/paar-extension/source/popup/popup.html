@@ -2,11 +2,64 @@
 <meta charset="utf-8" />
 <title>Options</title>
 <script src="../lib/moralis.1.7.0.js"></script>
+<script src="../lib/jquery-3.6.0.min.js"></script>
+<link href="./popup.css" rel="stylesheet" />
 
-<form id="options-form" class="detail-view-container">
-  <h3>ETH Address</h3>
-  <span id="popupEthAddress"></span>
-  <button id="getTransactions">Get Transactions from API</button>
+<form id="options-form" class="popupContainer">
+  <header><h1>paar bridge</h1></header>
+
+  <section class="popupInstructions">
+    <div class="popupInstructionsInner">
+      <ul>
+        <li>
+          Visit paar to Connect Your Wallet:
+          <a target="_blank" href="https://localhost:3000/">Here</a> (so your
+          address displays above)
+        </li>
+        <li>Go to a Shopify Checkout page with Credit Card fields</li>
+        <li>Confirm the Dollar ($) amount and ETH amount to be transferred</li>
+        <li>Click the Inject Credit Card button once enabled</li>
+        <li>Finish Checkout and See Confirmation of Transfer Here</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr />
+
+  <section class="ethInformation">
+    <div class="ethInformationInner">
+      <span class="addressLabel">ETH Address</span>
+      <span id="popupEthAddress"></span>
+    </div>
+  </section>
+
+  <section class="transferInformation">
+    <div class="transferInformationInner">
+      <span
+        >Transferring <strong id="transferAmountEth">0.05 ETH</strong>
+        <em id="transferAmountDollars"></em>
+      </span>
+    </div>
+  </section>
+
+  <section class="checkoutControls">
+    <div class="checkoutControlsInner">
+      <button id="injectCreditCard" disabled="true">Inject Credit Card</button>
+    </div>
+  </section>
+
+  <section class="completionInformation">
+    <div class="completionInformationInner">
+      <span class="completionMessage" id="transferSuccess"
+        >Transfer Successful!</span
+      >
+      <span class="completionMessage" id="transferFailure"
+        >Transfer Failed!</span
+      >
+    </div>
+  </section>
+
+  <!-- <button id="getTransactions">Get Transactions from API</button> -->
 </form>
 
 <script src="../options/options.js" type="module"></script>

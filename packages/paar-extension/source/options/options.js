@@ -39,18 +39,26 @@ class APIClient {
 
 async function init() {
   const storedOptions = await optionsStorage.getAll();
-  const ethAddress = storedOptions.text;
+  const ethAddress = storedOptions.ethAddress;
+  const transferAmountDollars = storedOptions.transferAmountDollars;
+  const dollarDisplay = "$" + transferAmountDollars / 100;
 
-  console.info("popup content", ethAddress, storedOptions);
+  console.info(
+    "popup content",
+    ethAddress,
+    transferAmountDollars,
+    storedOptions
+  );
 
   document.getElementById("popupEthAddress").textContent = ethAddress;
+  document.getElementById("transferAmountDollars").textContent = dollarDisplay;
 
   const apiClient = new APIClient(ethAddress);
 
   apiClient.startMoralis();
 
-  document.getElementById("getTransactions").onclick =
-    apiClient.getTransactions();
+  // document.getElementById("getTransactions").onclick =
+  //   apiClient.getTransactions();
 }
 
 init();

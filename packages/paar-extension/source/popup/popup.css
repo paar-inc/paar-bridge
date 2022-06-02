@@ -1,0 +1,73 @@
+.popupContainer {
+  padding: 25px;
+}
+
+ul li,
+span,
+p {
+  font-size: 15px;
+}
+
+header h1 {
+  margin: 0 0 15px 0;
+}
+
+.popupInstructions {
+  margin-bottom: 15px;
+}
+
+.popupInstructions ul {
+  padding: 0 0 0 15px;
+  margin: 0;
+}
+
+.popupInstructions ul li {
+  margin-bottom: 7px;
+}
+
+.ethInformation {
+  margin-bottom: 15px;
+}
+
+.addressLabel {
+}
+
+#popupEthAddress {
+  display: block;
+  background: lightgray;
+  padding: 10px;
+}
+
+.transferInformation {
+  margin-bottom: 15px;
+}
+
+.checkoutControls {
+  margin-bottom: 15px;
+}
+
+#injectCreditCard {
+  border: none;
+  outline: none;
+  background: cyan;
+  font-size: 15px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+#injectCreditCard[disabled="true"] {
+  cursor: no-drop;
+}
+
+.completionMessage {
+  display: block;
+  font-size: 20px;
+}
+
+#transferSuccess {
+  color: green;
+}
+
+#transferFailure {
+  color: red;
+}

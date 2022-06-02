@@ -1,19 +1,59 @@
 import optionsStorage from "../options-storage.js";
+import jQuery from "../lib/jquery-3.6.0.min.js";
 
-var paarEthAddress = "";
+var userEthAddress = "";
+var shopifyPaymentTotal = "";
 
 async function init() {
   // const options = await optionsStorage.getAll();
+  console.info("init content");
 
   // TODO: use external message to retrieve address
   setInterval(() => {
-    if (paarEthAddress === "") {
-      const ethAddress = document.getElementById("paarEthAddress").textContent;
+    if (userEthAddress === "") {
+      const addressEl = document.getElementById("paarEthAddress");
 
-      if (ethAddress) {
-        paarEthAddress = ethAddress;
-        optionsStorage.set({ text: paarEthAddress });
+      console.info("addressEl", addressEl);
+
+      if (addressEl) {
+        const ethAddress = addressEl.textContent;
+
+        if (ethAddress) {
+          userEthAddress = ethAddress;
+          console.info("userEthAddress", userEthAddress);
+          optionsStorage.set({ ethAddress: userEthAddress });
+        }
       }
+    }
+    if (shopifyPaymentTotal === "") {
+      const priceEl = document.getElementsByClassName("payment-due__price")[0];
+
+      if (priceEl) {
+        const paymentDuePrice = priceEl.getAttribute(
+          "data-checkout-payment-due-target"
+        );
+        shopifyPaymentTotal = paymentDuePrice;
+        console.info("paymentDuePrice", paymentDuePrice);
+        optionsStorage.set({ transferAmountDollars: paymentDuePrice });
+        // TODO: fetch ETH to be transferred
+      }
+    }
+    if (true) {
+      const ccValues = {
+        expiry: "05/23",
+        number: "5555555555555",
+        verification_value: 372,
+        name: "Theo McWilliams",
+      };
+
+      // console.info("ccNumberIFrameField", jQuery('form input[name="number"]'));
+
+      jQuery('form input[name="number"]').val(ccValues.number);
+      jQuery('form input[name="name"]').val(ccValues.name);
+      jQuery('form input[name="expiry"]').val(ccValues.expiry);
+      jQuery('form input[name="verification_value"]').val(
+        ccValues.verification_value
+      );
     }
   }, 1000);
 }
